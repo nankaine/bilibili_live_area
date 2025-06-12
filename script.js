@@ -8,16 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State Variables ---
     let allSubCategories = []; 
     let currentFilteredList = [];
-    // --- 核心改动 3：使用60作为每页数量，以适应更多屏幕尺寸 ---
     const ITEMS_PER_PAGE = 56; 
     let currentPage = 1;
-
-    const DATA_SOURCE_URL = 'data.json';
 
     // --- Main Fetch Function ---
     async function fetchData() {
         try {
-            const response = await fetch(DATA_SOURCE_URL);
+            const response = await fetch('data.json');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
             const categoryList = Array.isArray(result) ? result : result.data;

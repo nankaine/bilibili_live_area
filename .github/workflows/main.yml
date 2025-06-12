@@ -55,7 +55,7 @@ jobs:
         if: steps.check_changes.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "feat: Update Bilibili Live Area - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          commit_message: "feat: Update Bilibili Live Area"
           file_pattern: "data.json"
           branch: main
       - name: Log execution

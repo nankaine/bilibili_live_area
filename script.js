@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (/^\d+$/.test(searchTerm)) {
             // 如果是纯数字，按 ID 匹配
-            filtered = filtered.filter(sub => String(sub.id) === searchTerm);
+            filtered = filtered.filter(sub => String(sub.id).includes(searchTerm));
         } else {
             // 否则按名称模糊匹配
             filtered = filtered.filter(sub => sub.name.toLowerCase().includes(searchTerm.toLowerCase()));

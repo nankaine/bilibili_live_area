@@ -25,4 +25,4 @@
 
 ## 许可证
 
-本项目采用 [MIT License](https://github.com/your-username/your-repo/blob/main/LICENSE) 开源。
+本项目采用 [MIT License](https://github.com/Robonyantame/bilibili_live_area/blob/main/LICENSE) 开源。

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilibili Live Areas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Bilibili 直播分区列表</h1>
+        <button id="theme-toggle" class="theme-toggle-button">切换模式</button>
+    </header>
+
+    <div class="container">
+        <div class="filters">
+            <label for="parent-select">选择父分区:</label>
+            <select id="parent-select">
+                <!-- 选项将由JavaScript动态加载 -->
+            </select>
+
+            <label for="search-input">搜索子分区:</label>
+            <input type="text" id="search-input" placeholder="输入子分区名称...">
+        </div>
+
+        <div id="content" class="category-grid">
+            <p>正在加载数据...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+/* 定义CSS变量，用于轻松切换主题 */
+:root {
+    --background-color-light: #f8f9fa;
+    --text-color-light: #343a40;
+    --card-background-light: #ffffff;
+    --border-color-light: #e0e0e0;
+    --header-background-light: #e9ecef;
+    --input-background-light: #ffffff;
+
+    --background-color-dark: #212529;
+    --text-color-dark: #e9ecef;
+    --card-background-dark: #343a40;
+    --border-color-dark: #495057;
+    --header-background-dark: #343a40;
+    --input-background-dark: #212529;
+}
+
+/* 全局样式和主题切换 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+/* 头部样式 */
+header {
+    background-color: var(--header-background-light);
+    color: var(--text-color-light);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode header {
+    background-color: var(--header-background-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* 主题切换按钮 */
+.theme-toggle-button {
+    background: none;
+    border: 1px solid var(--text-color-light);
+    color: var(--text-color-light);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .theme-toggle-button {
+    border-color: var(--text-color-dark);
+    color: var(--text-color-dark);
+}
+
+.theme-toggle-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .theme-toggle-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 主内容容器 */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* 筛选器样式 */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+    background-color: var(--card-background-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .filters {
+    background-color: var(--card-background-dark);
+    border-color: var(--border-color-dark);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.filters label {
+    font-weight: bold;
+    color: var(--text-color-light);
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .filters label {
+    color: var(--text-color-dark);
+}
+
+.filters select,
+.filters input[type="text"] {
+    padding: 10px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 5px;
+    background-color: var(--input-background-light);
+    color: var(--text-color-light);
+    font-size: 1em;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    flex-grow: 1; /* 允许输入框伸展 */
+    min-width: 200px; /* 输入框最小宽度 */
+}
+
+body.dark-mode .filters select,
+body.dark-mode .filters input[type="text"] {
+    border-color: var(--border-color-dark);
+    background-color: var(--input-background-dark);
+    color: var(--text-color-dark);
+}
+
+.filters select:focus,
+.filters input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff; /* 聚焦时的蓝色边框 */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* 分区卡片网格布局 */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* 单个分区卡片样式 */
+.category-card {
+    background-color: var(--card-background-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 垂直居中内容 */
+    min-height: 180px; /* 最小高度，避免内容过少时卡片塌陷 */
+}
+
+body.dark-mode .category-card {
+    background-color: var(--card-background-dark);
+    border-color: var(--border-color-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .category-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.category-card img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 50%; /* 圆形图片 */
+    margin-bottom: 15px;
+    border: 2px solid var(--border-color-light); /* 图片边框 */
+    transition: border-color 0.3s ease;
+}
+
+body.dark-mode .category-card img {
+    border-color: var(--border-color-dark);
+}
+
+.category-card h3 {
+    margin: 0 0 5px 0;
+    color: var(--text-color-light);
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .category-card h3 {
+    color: var(--text-color-dark);
+}
+
+.category-card p {
+    margin: 0;
+    color: #6c757d; /* 父分区名称的颜色 */
+    font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .category-card p {
+    color: #ced4da;
+}
+
+/* --- 提示框样式 (Toast Notification) --- */
+.toast {
+    position: fixed; /* 固定在屏幕上 */
+    top: 20px; /* 距离顶部20px */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -100px); /* 初始位置在屏幕外，并水平居中 */
+    background-color: #4CAF50; /* 绿色背景 */
+    color: white; /* 白色文字 */
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 1000; /* 确保在最顶层 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* 初始完全透明 */
+    visibility: hidden; /* 初始隐藏 */
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* 平滑的过渡动画 */
+}
+
+/* 当提示框需要显示时，添加这个class */
+.toast.show {
+    transform: translate(-50%, 0); /* 移动到最终位置 */
+    opacity: 1; /* 完全不透明 */
+    visibility: visible; /* 可见 */
+}
+
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters select,
+    .filters input[type="text"] {
+        min-width: unset; /* 在小屏幕上移除最小宽度限制 */
+        width: 100%;
+    }
+}

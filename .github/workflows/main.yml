@@ -1,0 +1,40 @@
+name: Auto-Update Bilibili Live Area
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch_and_save_json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch JSON data and save to file
+        run: |
+          TARGET_URL="https://api.live.bilibili.com/room/v1/Area/getList"
+          OUTPUT_FILE="data.json"
+          mkdir -p $(dirname "$OUTPUT_FILE")
+          curl -s "$TARGET_URL" -o "$OUTPUT_FILE"
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to fetch data from $TARGET_URL"
+            exit 1
+          else
+            echo "Successfully fetched JSON data and saved to $OUTPUT_FILE"
+          fi
+        env:
+          TARGET_URL: ${{ secrets.TARGET_URL || 'https://api.live.bilibili.com/room/v1/Area/getList' }}
+          OUTPUT_FILE: ${{ secrets.OUTPUT_FILE || 'data.json' }}
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "feat: Update Bilibili Live Area"
+          file_pattern: "data/*.json"
+          branch: main

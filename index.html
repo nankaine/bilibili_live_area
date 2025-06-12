@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilibili Live Areas</title>
+    <title>Bilibili 直播分区ID查询</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Bilibili 直播分区列表</h1>
-        <button id="theme-toggle" class="theme-toggle-button">切换模式</button>
-    </header>
 
-    <div class="container">
-        <div class="filters">
-            <label for="parent-select">选择父分区:</label>
-            <select id="parent-select">
-                <!-- 选项将由JavaScript动态加载 -->
+    <!-- 新增：主内容容器 -->
+    <main class="container">
+        <header>
+            <h1>Bilibili 直播分区ID查询</h1>
+            <p>点击卡片即可复制分区ID到剪贴板</p>
+        </header>
+    
+        <div class="controls">
+            <select id="category-filter">
+                <option value="all">所有分区</option>
             </select>
-
-            <label for="search-input">搜索子分区:</label>
-            <input type="text" id="search-input" placeholder="输入子分区名称...">
+            <input type="text" id="search-input" placeholder="搜索分区名称...">
         </div>
-
-        <div id="content" class="category-grid">
-            <p>正在加载数据...</p>
+    
+        <div id="cards-container">
+            <!-- 卡片将由JavaScript动态生成 -->
         </div>
-    </div>
+    
+        <div id="pagination-container">
+            <!-- 分页按钮将由JavaScript动态生成 -->
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>

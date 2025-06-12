@@ -64,8 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
             filtered = allSubCategories.filter(sub => sub.parent_name === selectedCategory);
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(sub => sub.name.toLowerCase().includes(searchTerm));
+        if (/^\d+$/.test(searchTerm)) {
+            // 如果是纯数字，按 ID 匹配
+            filtered = filtered.filter(sub => String(sub.id) === searchTerm);
+        } else {
+            // 否则按名称模糊匹配
+            filtered = filtered.filter(sub => sub.name.toLowerCase().includes(searchTerm.toLowerCase()));
         }
 
         currentFilteredList = filtered;

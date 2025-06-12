@@ -1,40 +1,65 @@
 name: Auto-Update Bilibili Live Area
-
 on:
   schedule:
-    - cron: '0 * * * *'
+    # 每小时的第5分钟执行，避免整点高峰
+    - cron: '5 * * * *'
   workflow_dispatch:
-
+  # 添加 push 触发器确保仓库保持活跃
+  push:
+    branches: [ main ]
 permissions:
   contents: write
-
 jobs:
   fetch_and_save_json:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        with:
+          # 确保获取完整的 git 历史
+          fetch-depth: 0
       - name: Fetch JSON data and save to file
         run: |
-          TARGET_URL="https://api.live.bilibili.com/room/v1/Area/getList"
-          OUTPUT_FILE="data.json"
+          TARGET_URL="${{ secrets.TARGET_URL || 'https://api.live.bilibili.com/room/v1/Area/getList' }}"
+          OUTPUT_FILE="${{ secrets.OUTPUT_FILE || 'data.json' }}"
+          
+          echo "Fetching data from: $TARGET_URL"
+          echo "Output file: $OUTPUT_FILE"
+          
           mkdir -p $(dirname "$OUTPUT_FILE")
-          curl -s "$TARGET_URL" -o "$OUTPUT_FILE"
-          if [ $? -ne 0 ]; then
-            echo "Error: Failed to fetch data from $TARGET_URL"
-            exit 1
+          
+          # 添加更详细的错误处理和调试信息
+          if curl -s -f "$TARGET_URL" -o "$OUTPUT_FILE"; then
+            echo "Successfully fetched JSON data"
+            echo "File size: $(wc -c < "$OUTPUT_FILE") bytes"
+            echo "First 200 characters of response:"
+            head -c 200 "$OUTPUT_FILE"
+            echo ""
           else
-            echo "Successfully fetched JSON data and saved to $OUTPUT_FILE"
+            echo "Error: Failed to fetch data from $TARGET_URL"
+            echo "HTTP response code: $(curl -s -o /dev/null -w "%{http_code}" "$TARGET_URL")"
+            exit 1
           fi
-        env:
-          TARGET_URL: ${{ secrets.TARGET_URL || 'https://api.live.bilibili.com/room/v1/Area/getList' }}
-          OUTPUT_FILE: ${{ secrets.OUTPUT_FILE || 'data.json' }}
-
+      - name: Check if file changed
+        id: check_changes
+        run: |
+          if git diff --quiet data.json; then
+            echo "No changes detected in data.json"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected in data.json"
+            echo "changed=true" >> $GITHUB_OUTPUT
+            git diff --stat data.json
+          fi
       - name: Commit and push changes
+        if: steps.check_changes.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "feat: Update Bilibili Live Area"
+          commit_message: "feat: Update Bilibili Live Area - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           file_pattern: "data.json"
           branch: main
+      - name: Log execution
+        run: |
+          echo "Workflow executed at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "Repository: ${{ github.repository }}"
+          echo "Run ID: ${{ github.run_id }}"

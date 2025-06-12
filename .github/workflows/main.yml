@@ -36,5 +36,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "feat: Update Bilibili Live Area"
-          file_pattern: "data/*.json"
+          file_pattern: "data.json"
           branch: main

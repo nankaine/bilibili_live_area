@@ -17,6 +17,8 @@
 
 此仓库为自己的项目使用，用于设置直播分区，它通过直接调用B站的公开API，获取最新的直播分区数据，并以一个干净、响应式的网页界面呈现给用户。
 
+你可以在此预览：https://robonyantame.github.io/bilibili_live_area/
+
 ## 关于 AI 生成
 
 此项目由 `Google Gemini 2.5 Pro` 生成，完全由AI完成，包括代码、文档和设计。

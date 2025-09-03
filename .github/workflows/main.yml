@@ -2,7 +2,7 @@ name: Auto-Update Bilibili Live Area
 on:
   schedule:
     # 每小时的第5分钟执行，避免整点高峰
-    - cron: '5 * * * *'
+    - cron: '5 */2 * * *'
   workflow_dispatch:
   # 添加 push 触发器确保仓库保持活跃
   push:
